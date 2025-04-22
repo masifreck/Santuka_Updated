@@ -110,7 +110,7 @@ const ScannerTP = ({route}) => {
   }
 
   const codeScanner = useCodeScanner({
-    codeTypes: ['qr'],
+    codeTypes: ['qr', 'ean-13', 'ean-8', 'code-128', 'code-39', 'upc-a', 'upc-e'],
     onCodeScanned: codes => {
       const scannedValue = codes[0].value;
       console.log('QR CODE:', scannedValue);

@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 200,
     backgroundColor: 'white',
-    padding: 30,
+    paddingVertical:30,
     margin: 10,
     borderRadius: 15,
     alignItems: 'center',
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 200,
     backgroundColor: 'white',
-    padding: 30,
+    paddingVertical:30,
     margin: 10,
     marginRight: "52%",
     borderRadius: 15,
@@ -146,6 +146,7 @@ const styles = StyleSheet.create({
   buttonTextBottom: {
     position: 'absolute',
     bottom: 25,
+    textAlign:'center'
   },
   buttonImage: {
     width: 100,

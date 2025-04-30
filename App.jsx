@@ -1,26 +1,24 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+
+// Screens
+import LoginScreen from './screen/Login';
+import DashboardScreen from './screen/Dashboard';
+import DataScreen from './screen/Data';
+import OfflineReportScreen from './screen/OfflineReport';
+import ReconciliationScreen from './screen/Reconciliation';
+import SettingsScreen from './screen/Settings';
+import ScannerTPScreen from './screen/ScannerTP';
+import ScannerChallanScreen from './screen/ScannerChallan';
+import ScanScreen from './screen/Scan';
+import UpiScannerScreen from './screen/UpiScanner';
+import ScannerLRScreen from './screen/ScannerLR';
+import LrPhotoScreen from './screen/LrPhoto';
+import SplashScreen from './screen/Splash';
 import NewReport from './screen/NewReport';
 
 const Stack = createStackNavigator();
-
-// Import screens only when they are needed
-const LoginScreen = React.lazy(() => import('./screen/Login'));
-const DashboardScreen = React.lazy(() => import('./screen/Dashboard'));
-const DataScreen = React.lazy(() => import('./screen/Data'));
-
-const OfflineReportScreen = React.lazy(() => import('./screen/OfflineReport'));
-const ReconciliationScreen = React.lazy(() => import('./screen/Reconciliation'));
-const SettingsScreen = React.lazy(() => import('./screen/Settings'));
-const ScannerTPScreen = React.lazy(() => import('./screen/ScannerTP'));
-const ScannerChallanScreen = React.lazy(() => import('./screen/ScannerChallan'));
-const ScanScreen = React.lazy(() => import('./screen/Scan'));
-
-const UpiScannerScreen = React.lazy(() => import('./screen/UpiScanner'));
-const ScannerLRScreen = React.lazy(() => import('./screen/ScannerLR'));
-const LrPhotoScreen = React.lazy(() => import('./screen/LrPhoto'));
-const SplashScreen = React.lazy(() => import('./screen/Splash'));
 
 const App = () => {
   return (
@@ -30,14 +28,12 @@ const App = () => {
         <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Dashboard" component={DashboardScreen} options={{ headerLeft: () => null, gestureEnabled: false }} />
         <Stack.Screen name="Data" component={DataScreen} options={{ gestureEnabled: false }} />
-      
         <Stack.Screen name="OfflineReport" component={OfflineReportScreen} options={{ headerTitle: "OfflineReport" }} />
         <Stack.Screen name="Reconciliation" component={ReconciliationScreen} />
         <Stack.Screen name="Settings" component={SettingsScreen} />
         <Stack.Screen name="ScannerTP" component={ScannerTPScreen} />
         <Stack.Screen name="ScannerChallan" component={ScannerChallanScreen} />
         <Stack.Screen name="Scan" component={ScanScreen} />
-       
         <Stack.Screen name="UpiScanner" component={UpiScannerScreen} />
         <Stack.Screen name="ScannerLR" component={ScannerLRScreen} />
         <Stack.Screen name="LrPhoto" component={LrPhotoScreen} />

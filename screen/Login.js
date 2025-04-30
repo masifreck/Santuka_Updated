@@ -1,4 +1,4 @@
-import React, {  useState } from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -11,12 +11,12 @@ import {
   Alert,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import NetInfo from '@react-native-community/netinfo';
 const Login = ({navigation}) => {
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [Password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -28,39 +28,41 @@ const Login = ({navigation}) => {
         Alert.alert('Failed', 'Please provide username');
         return;
       }
-      if (!password) {
-        Alert.alert('Failed', 'Please provide password');
+      if (!Password) {
+        Alert.alert('Failed', 'Please provide Password');
         return;
       }
-  
+      const netState = await NetInfo.fetch();
+      if (!netState.isConnected) {
+        Alert.alert('No Internet', 'Please check your connection.');
+        return;
+      }
       setLoading(true); // Start loading
-  
-      const response = await fetch("http://mis.santukatransport.in/API/Test/APILogin", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json",
+        const response = await fetch(
+        `http://mis.santukatransport.in/API/Test/APILogin`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            username,
+            Password,
+          }),
         },
-        body: JSON.stringify({
-          username: username,   
-          Password: password,   
-        }),
-      });
-      
-      
-      
-  console.log(response)
-      setLoading(false); // Stop loading
-  
+      );
+      console.log(response);
       if (response.status === 200) {
         await AsyncStorage.setItem('isLoggedIn', 'true');
         await AsyncStorage.setItem('username', username);
-        await AsyncStorage.setItem('password', password);
+        await AsyncStorage.setItem('Password', Password);
         Alert.alert('Success', 'Login successful');
-        navigation.navigate('Dashboard', {username, password});
+        navigation.navigate('Dashboard', {username, Password});
       } else {
-        console.log('Login failed: Invalid username or password');
-        setErrorMessage(`Invalid username or password Server Status ${response.status}`);
+        console.log('Login failed: Invalid username or Password');
+        setErrorMessage(
+          `Invalid username or Password Server Status ${response.status}`,
+        );
       }
     } catch (error) {
       console.log('An error occurred during login:', error);
@@ -69,7 +71,6 @@ const Login = ({navigation}) => {
       setLoading(false); // Stop loading in case of error
     }
   };
-  
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -86,19 +87,22 @@ const Login = ({navigation}) => {
             placeholderTextColor="#666666"
             style={styles.textInput}
             autoCapitalize="none"
-            onChangeText={(text) => setUsername(text)}
+            onChangeText={text => setUsername(text)}
           />
         </View>
         <View style={styles.inputContainer}>
           {/* Password Input */}
-          <Image source={require('./assets/password.png')} style={styles.icon} />
+          <Image
+            source={require('./assets/password.png')}
+            style={styles.icon}
+          />
           <TextInput
             placeholder="Your Password"
             placeholderTextColor="#666666"
             secureTextEntry={!showPassword}
             style={styles.textInput}
             autoCapitalize="none"
-            onChangeText={(text) => setPassword(text)}
+            onChangeText={text => setPassword(text)}
           />
           {/* Password Visibility Toggle */}
           <TouchableOpacity onPress={togglePasswordVisibility}>

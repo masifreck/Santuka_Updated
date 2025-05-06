@@ -327,17 +327,39 @@ const storeDataOffline = async (data) => {
       setCapturedPhoto('');
     };
     
-
+    useEffect(() => {
+    
+      if (route.params?.scannedChallan) {
+        setScannedChallan(route.params.scannedChallan);
+      }
+    }, [route.params?.scannedChallan]);
   
-
-  useEffect(() => {
-    if (route.params?.scannedTP) {
-      setScannedTP(route.params.scannedTP);
-    }
-    if (route.params?.scannedChallan) {
-      setScannedChallan(route.params.scannedChallan);
-    }
-  }, [route.params]);
+    useEffect(() => {
+      const tp = route.params?.scannedTP;
+    
+      if (tp) {
+        if (!tp.includes('SANTUKA TRANSPORT')) {
+          Alert.alert(
+            'Error',
+            'This TP does not belong to SANTUKA TRANSPORT. Please verify.',
+            [
+              {
+                text: 'OK',
+                onPress: () => {
+                  navigation.setParams({ scannedTP: null }); // Reset param after alert
+                  setScannedTP('');
+                },
+              },
+            ]
+          );
+        } else {
+          setScannedTP(tp);
+          navigation.setParams({ scannedTP: null }); // Reset to avoid repeat alert
+        }
+      }
+    }, [route.params?.scannedTP]);
+    
+    
 
   const handleScanTPPress= () => {
     navigation.navigate('ScannerTP');

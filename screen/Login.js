@@ -18,7 +18,7 @@ const Login = ({navigation}) => {
   const [username, setUsername] = useState('');
   const [Password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const togglePasswordVisibility = () => {
+  const togglePasswordVisibility = () => { 
     setShowPassword(!showPassword);
   };
 
